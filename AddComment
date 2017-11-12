@@ -1,0 +1,50 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class AddComment extends JPanel implements ActionListener{
+private CommentThread thread;
+private JTextField comment_area;
+private JTextField user_area;
+private JButton add_comment_button;
+
+public AddComment(CommentThread thread){
+	this.thread = thread;
+	
+	comment_area = new JTextField(10);
+	add(new JLabel("Comment: "));
+	add(comment_area);
+	
+	user_area = new JTextField(10);
+	add(new JLabel("Comment posted by: "));
+	add(user_area);
+	
+	add_comment_button = new JButton("Add Comment");
+	add_comment_button.setActionCommand("add");
+	add(add_comment_button);
+	
+	add_comment_button.addActionListener(this);
+}
+	
+	
+	
+	
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String comment_added = comment_area.getText();
+		String user_writer = user_area.getText();
+		
+		Comment added_comment = new Comment(comment_added, user_writer);
+		thread.addComment(added_comment);
+		
+		comment_area.setText("");
+		user_area.setText("");
+		
+	}
+
+}
