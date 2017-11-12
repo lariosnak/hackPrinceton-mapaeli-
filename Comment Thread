@@ -1,0 +1,35 @@
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class CommentThread extends java.util.Observable {
+	private List<Comment> all_comments;
+	
+	public CommentThread(){
+		all_comments = new ArrayList<Comment>();
+	}
+public void addComment(Comment c){
+	all_comments.add(c);
+	setChanged();
+	notifyObservers();
+}
+public void removeComment(Comment c){
+	all_comments.remove(c);
+	setChanged();
+	notifyObservers();
+}
+public Comment getComment(int index) {
+	return all_comments.get(index);
+}
+public int getSize() {
+	return all_comments.size();
+}
+public void scramble(){
+Collections.shuffle(all_comments);
+setChanged();
+notifyObservers();
+}
+	
+}
