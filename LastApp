@@ -1,0 +1,42 @@
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class LastApp extends JPanel implements ActionListener{
+
+	private CommentThread thread;
+	private int entry;
+	
+	public LastApp(CommentThread thread, int entry){
+		this.thread= thread;
+		this.entry= entry;
+		
+		this.setBorder(BorderFactory.createEtchedBorder());
+		
+		setLayout(new BorderLayout());
+		
+		JLabel com_label = new JLabel( "'"+ thread.getComment(entry).getComment()+ "'  by: " + thread.getComment(entry).getUser());
+		add(com_label, BorderLayout.CENTER);
+		JPanel the_buttons = new JPanel();
+		
+		JButton remove_comment = new JButton("Delete Comment");
+		remove_comment.setActionCommand("remove");
+		remove_comment.addActionListener(this);
+		the_buttons.add(remove_comment);
+		
+		add(the_buttons, BorderLayout.EAST);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+	String doit = e.getActionCommand();
+	if(doit.equals("remove"));
+	thread.removeComment(thread.getComment(entry));
+		
+	}
+
+}
