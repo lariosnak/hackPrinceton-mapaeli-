@@ -1,0 +1,85 @@
+import java.awt.BorderLayout;
+
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+public class ThreadView extends JPanel implements Observer, ActionListener{
+	private CommentThread thread;
+	private JPanel thread_panel;
+	
+	public ThreadView(CommentThread thread){
+		this.thread = thread;
+		thread.addObserver(this);
+		
+		setLayout(new BorderLayout());
+		
+		thread_panel = new JPanel();
+		thread_panel.setLayout(new GridLayout(0,1));
+		buildPanel();
+		
+		add(new JScrollPane(thread_panel), BorderLayout.CENTER);
+		
+		AddComment add_comment_app = new AddComment(thread);
+		add(add_comment_app, BorderLayout.SOUTH);
+		
+	
+
+	    Image image1 = null;
+	    URL url1 = null;
+	    try {
+	        url1 = new URL("http://www.westessexnow.com/uploads/3/0/7/7/30776419/4570010.png?688");
+	        image1 = ImageIO.read(url1);
+	    } catch (MalformedURLException ex) {
+	        System.out.println("Malformed URL");
+	    } catch (IOException iox) {
+	        System.out.println("Can not load file");
+	    }
+	    JLabel label = new JLabel(new ImageIcon(image1));
+	    this.add(label, BorderLayout.NORTH);
+	         
+
+	      
+	            JButton scramble_comments = new JButton("Scramble Comments");
+	        	scramble_comments.addActionListener(this);
+	        	JPanel buttons_ha = new JPanel();
+	        	buttons_ha.add(scramble_comments);
+	        	add(buttons_ha, BorderLayout.WEST);
+	}
+
+	
+	          public void buildPanel(){
+	            	for (int y =0; y < thread.getSize(); y++){
+	            		LastApp comment_list = new LastApp(thread,y);
+	            		thread_panel.add(comment_list);
+	            	}
+	            }
+		
+		public void update(Observable o, Object ob){
+			thread_panel.removeAll();
+			buildPanel();
+			thread_panel.revalidate();
+		}
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			thread.scramble();
+			
+		}
+		
+
+}
