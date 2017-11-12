@@ -1,0 +1,18 @@
+public class Comment  {
+
+	private String user_comment;
+	private String user;
+	
+	public Comment(String comment, String user){
+	user_comment = comment;
+	this.user = user;
+	}
+	public String getComment(){
+		return user_comment;
+	}
+	public String getUser(){
+		return user;
+	}
+	
+
+}
